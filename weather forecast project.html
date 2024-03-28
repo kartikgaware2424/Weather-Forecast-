@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Report</title>
+    
+</head>
+<!-- Lets start with the code  -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    
+    h1 {
+        color: #333;
+    }
+    
+    input[type="text"] {
+        padding: 8px;
+        margin-bottom: 10px;
+        width: 60%;
+    }
+    
+    button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    #weatherInfo {
+        margin-top: 20px;
+    }
+    
+</style>
+<body>
+  <!-- This is the html code which contains the input method and heading -->
+    <div class="container">
+        <h1>Weather Report</h1>
+        <input type="text" id="countryInput" placeholder="Enter Country Name">
+        <!-- Button that will give result -->
+        <button onclick="getWeather()">Get Weather</button>
+        <!-- This is output section of the code where the description of weather will be visible -->
+        <div id="weatherInfo"></div>
+    </div>
+    <script >
+        //so lets start with the javascript 
+        //so Create a function get weather form the button
+        function getWeather()
+        {
+            //lets call the text method first 
+            const country =document.getElementById('countryInput').value;
+           
+            //take the url form description of the video
+            const apiKey='95315da65ff68a9b9092294e3a72bb8d';
+           const url = `https://api.openweathermap.org/data/2.5/weather?q=${country}&appid=${apiKey}`;
+           //now fetch the url 
+           fetch(url).then(response => response.json()).then(data=>
+           {
+            //call the output section and get the data
+            const weatherInfo =document.getElementById('weatherInfo');
+            weatherInfo.innerHTML=`<h2>Weather in ${data.name },${data.sys.country}</h2>
+                                    <p>Temperature : ${data.main.temp}K</p>
+                                    <p>Description: ${data.weather[0].description}</p>`
+           }).catch(error=>
+           {
+            console.log("error");
+            const weatherInfo =document.getElementById('weatherInfo');
+            weatherInfo.innerHTML=`<p>Failed to fecth the Api...</p>`
+
+           })
+//now save and run the code 
+            
+        }
+        
+    </script>
+</body>
+</html>
